@@ -1,35 +1,44 @@
 package bankwithlogging;
 
-public aspect LoggingAspect {
+import org.aspectj.lang.JoinPoint;
+
+
+
+public abstract aspect LoggingAspect 
+{ 
 	
-	pointcut logCreation() :
-		initialization (Customer.new(..)) || initialization (Account.new(..));
+	public abstract pointcut pointsToBeLoggedBefore( );
+	public abstract pointcut pointsToBeLoggedAfter( );
+	   
+	//public abstract pointcut pointsToBeExcluded( );
+	
+	   public pointcut filteredPointsToBeLoggedBefore(Object caller) : 
+		   pointsToBeLoggedBefore( ) && 
+		      //!pointsToBeExcluded( ) && 
+		      !within(bankwithlogging.LoggingAspect+) && 
+		      this(caller);
+	   
+	   public pointcut filteredPointsToBeLoggedAfter(Object caller) : 
+		   pointsToBeLoggedAfter( ) && 
+		      //!pointsToBeExcluded( ) && 
+		      !within(bankwithlogging.LoggingAspect+) && 
+		      this(caller);
 	
 	
-	after() : logCreation()
-	{
-		Logger.log("Created object " + thisJoinPoint.getTarget().toString());
-	}
-	
-	
-	pointcut logDeposit(int amount):
-		call(void Account.deposit(int)) && args(amount);
-	
-	before(int amount): logDeposit(amount)
-	{
-		String stringToLog = "deposit called on object " + thisJoinPoint.getTarget().toString() + " with parameter " + amount;
-        Logger.log(stringToLog);
-	}
-			
-	
-	pointcut logWithdraw(int amount):
-		call(void Account.withdraw(int)) && args(amount);
-	
-	before(int amount): logWithdraw(amount)
-	{
-        String stringToLog = "withdraw called on object " + thisJoinPoint.getTarget().toString() + " with parameter " + amount;
-        Logger.log(stringToLog);
-	}
+	   before( Object caller) : filteredPointsToBeLoggedBefore(caller)
+	   {
+	      logBefore(thisJoinPoint);
+	   }
+	   
+	   after( Object caller) : filteredPointsToBeLoggedAfter(caller)
+	   {
+	      logAfter(thisJoinPoint);
+	   }
+	   
+	   public abstract void logBefore(JoinPoint joinPoint);
+	   
+	   public abstract void logAfter(JoinPoint joinPoint);
 	
 }
+	
 

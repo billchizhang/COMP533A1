@@ -1,5 +1,10 @@
 package bankwithlogging;
 
+import javax.annotation.processing.*;
+
+@SupportedAnnotationTypes(value= {"*"})
+
+
 // Start of user code for imports
 // End of user code
 
@@ -20,6 +25,7 @@ public class Account {
         //String stringToLog = "Created object " + this;
         // // Logger.log(stringToLog);
     }
+    
 
     public void deposit(int amount) {
         //String stringToLog = "deposit called on object " + this + " with parameter " + amount;
