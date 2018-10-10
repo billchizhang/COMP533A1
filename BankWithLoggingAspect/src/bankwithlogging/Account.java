@@ -1,5 +1,10 @@
 package bankwithlogging;
 
+import javax.annotation.processing.*;
+
+@SupportedAnnotationTypes(value= {"*"})
+
+
 // Start of user code for imports
 // End of user code
 
@@ -17,19 +22,20 @@ public class Account {
         this.balanceInCents = initialBalance;
         this.owner = owner;
         this.accountNumber = (int) (Math.random() * 1000000);
-        String stringToLog = "Created object " + this;
-        Logger.log(stringToLog);
+        //String stringToLog = "Created object " + this;
+        // // Logger.log(stringToLog);
     }
+    
 
     public void deposit(int amount) {
-        String stringToLog = "deposit called on object " + this + " with parameter " + amount;
-        Logger.log(stringToLog);
+        //String stringToLog = "deposit called on object " + this + " with parameter " + amount;
+        // Logger.log(stringToLog);
         this.balanceInCents = balanceInCents + amount;
     }
 
     public void withdraw(int amount) {
-        String stringToLog = "withdraw called on object " + this + " with parameter " + amount;
-        Logger.log(stringToLog);
+        //String stringToLog = "withdraw called on object " + this + " with parameter " + amount;
+        // Logger.log(stringToLog);
         if (balanceInCents >= amount) {
             this.balanceInCents = balanceInCents - amount;
         } else {
