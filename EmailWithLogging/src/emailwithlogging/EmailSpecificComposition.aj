@@ -5,11 +5,10 @@ import org.aspectj.lang.JoinPoint;
 
 public aspect EmailSpecificComposition extends LoggingAspect {
 
-	
+	 
+	public pointcut pointsToBeLoggedAfter():  initialization(Email.new(..));
 	public pointcut pointsToBeLoggedBefore():  call(* Email.*(..));
 		
-	public pointcut pointsToBeLoggedAfter():  initialization(Email.new(..));
-
 	
 	public void logBefore(JoinPoint joinPoint) {
 		String method = joinPoint.getSignature().getName();

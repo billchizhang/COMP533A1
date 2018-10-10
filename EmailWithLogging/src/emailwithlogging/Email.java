@@ -1,5 +1,9 @@
 package emailwithlogging;
 
+import javax.annotation.processing.SupportedAnnotationTypes;
+
+@SupportedAnnotationTypes(value= {"*"})
+
 public class Email {
 	
 	private String address; 
@@ -12,14 +16,14 @@ public class Email {
 		this.password = password; 
 	}
 	
-	public void setPassword(String newPassword) throws Exception {
+	public void setPassword(String newPassword){
 		
 			this.password = newPassword; 
 		
 	}
 	
 	public String toString() {
-        String returnedString = "Email " + address + " of " + username;
+        String returnedString = "Email " + address + " of " + username + " with " + password;
         return returnedString;
     }
 
